@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import util.Announcement;
+import util.FilterFileReader;
 
 /**
  * @author Mohammed Al-Safwan
@@ -18,6 +20,7 @@ public class Master extends Thread {
 	private Resource mRes; 										//Shared resources with the slaves
 	private ArrayList<Slave> mSlaves; 						//List of slaves
 
+	
 	public Master() throws IOException {
 		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 		// Method				:	public Master() throws IOException
@@ -39,6 +42,7 @@ public class Master extends Thread {
 		mSeverSocket.setSoTimeout(0);
 		mRes = new Resource();
 		mSlaves = new ArrayList<>();
+
 	}
 
 	@Override

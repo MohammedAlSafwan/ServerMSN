@@ -3,10 +3,12 @@ package server;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import util.FilterFileReader;
 import util.MessageType;
 
 /**
@@ -17,13 +19,26 @@ public class Resource {
 
 	private ArrayList<Message> mMessages;
 	private final String MESSAGES = "MESSAGES";
-
+	private HashMap<String, String> mNonosFilter;
+	private ClassLoader classLoader;
+	
 	public Resource() {
 		mMessages = new ArrayList<>();
+		classLoader = ClassLoader.getSystemClassLoader();
+		mNonosFilter = FilterFileReader.getFilter(classLoader.getResource("filteredWords").getFile());
 	}
 
 	public synchronized void write(Message incomingMsg) {
 		boolean containsMsg = false;
+		
+		//filter the message before storing it
+		System.out.println("============================");
+		System.out.println("Before");
+		System.out.println(incomingMsg.toPrettyString());
+		filterMessage(incomingMsg);
+		System.out.println("After");
+		System.out.println(incomingMsg.toPrettyString());
+		System.out.println("============================");
 
 		//Check if the message already in
 		for (Message currentMsg : mMessages) {
@@ -39,6 +54,28 @@ public class Resource {
 		}
 		Collections.sort(mMessages);
 		System.out.println("Resource - write - Done writing");
+	}
+
+	private void filterMessage(Message incomingMsg) {
+		String msgBody = incomingMsg.getMessage();
+		String[] splitedMsg = msgBody.split(" ");
+		String outputMsg = "";
+		
+		for(int index = 0; index<splitedMsg.length; index++){
+			if(mNonosFilter.containsKey(splitedMsg[index].toLowerCase())) {
+				splitedMsg[index] = mNonosFilter.get(splitedMsg[index]);
+			}
+			if(index == 0) {
+				outputMsg = outputMsg.concat(splitedMsg[index]);
+			}else {
+				outputMsg = outputMsg.concat(" " + splitedMsg[index]);
+			}
+			System.out.println(outputMsg);
+		}
+		
+		incomingMsg.setMessage(outputMsg);
+		
+//		return incomingMsg;
 	}
 
 	public Message readLastMessage() {

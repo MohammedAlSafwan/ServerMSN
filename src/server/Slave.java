@@ -121,7 +121,7 @@ public class Slave extends Thread {
 		// Modifications		:
 		//							Date			    Developer				Notes
 		//							  ----			      ---------			 	     -----
-		//							Jan 31, 2019		    Mohammed Al-Safwan				Initial setup
+		//							Jan 31, 2019		    Mohammed Al-Safwan			Initial setup
 		//
 		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
