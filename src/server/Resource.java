@@ -25,7 +25,7 @@ public class Resource {
 	public Resource() {
 		mMessages = new ArrayList<>();
 		classLoader = ClassLoader.getSystemClassLoader();
-		mNonosFilter = FilterFileReader.getFilter(classLoader.getResource("filteredWords").getFile());
+		mNonosFilter = FilterFileReader.getFilter(classLoader.getResource("filteredWords").getFile().replaceAll("%20"," "));
 	}
 
 	public synchronized void write(Message incomingMsg) {
